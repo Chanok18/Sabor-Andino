@@ -46,16 +46,28 @@ fun MenuScreen(navController: NavController) {
         LazyColumn(contentPadding = padding) {
             items(platos) { plato ->
                 ListItem(
-                    headlineContent = { Text(plato.nombre) },
-                    supportingContent = { Text("S/ ${plato.precio}") },
+
+                    // CAMBIO REALIZADO
+                    headlineContent = {
+                        Text("${plato.nombre} - S/ ${plato.precio}")
+                    },
+
+                    // CAMBIO REALIZADO
+                    supportingContent = {
+                        Text(plato.descripcion)
+                    },
+
                     modifier = Modifier.clickable {
-                        navController.navigate(Screen.Detail.createRoute(plato.id))
+                        navController.navigate(
+                            Screen.Detail.createRoute(plato.id)
+                        )
                     }
                 )
             }
         }
     }
 }
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun MenuPreview() {
