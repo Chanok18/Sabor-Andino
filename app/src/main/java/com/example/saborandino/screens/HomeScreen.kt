@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.saborandino.navigation.Screen
 import com.example.saborandino.ui.theme.SaborAndinoTheme
 
@@ -20,23 +21,22 @@ fun HomeScreen(navController: NavController) {
 
     Column(modifier = Modifier.padding(24.dp)) {
 
-        Text("Bienvenido", style = MaterialTheme.typography.headlineMedium)
-
-        Spacer(modifier = Modifier.height(20.dp))
+        Text("Bienvenido a Sabor Andino 👋")
 
         Button(onClick = { navController.navigate(Screen.Menu.route) }) {
-            Text("Ver Menu")
+            Text("Ver Menú")
         }
 
         Button(onClick = { navController.navigate(Screen.Profile.route) }) {
-            Text("Mi Perfil")
+            Text("Mi Pedido")
         }
     }
 }
+
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun HomeScreenPreview() {
     SaborAndinoTheme {
-        HomeScreen(navController = androidx.navigation.compose.rememberNavController())
+        HomeScreen(navController = rememberNavController())
     }
 }
