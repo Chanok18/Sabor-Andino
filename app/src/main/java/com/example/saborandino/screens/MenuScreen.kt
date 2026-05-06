@@ -1,47 +1,33 @@
 package com.example.saborandino.screens
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.ListItem
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
 import com.example.saborandino.model.DataProvider
+import com.example.saborandino.model.Plato
 import com.example.saborandino.navigation.Screen
 import com.example.saborandino.ui.theme.SaborAndinoTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuScreen(navController: NavController) {
-
     var categoriaSeleccionada by remember { mutableStateOf("Todos") }
     val categorias = listOf("Todos", "Entradas", "Fondo", "Bebidas", "Postres")
 
@@ -54,7 +40,7 @@ fun MenuScreen(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Menú") },
+                title = { Text("Nuestro Menú", fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver")
@@ -63,51 +49,87 @@ fun MenuScreen(navController: NavController) {
             )
         }
     ) { padding ->
-
         Column(modifier = Modifier.padding(padding)) {
-            // Categorías filtrables
-            LazyRow(modifier = Modifier.padding(vertical = 8.dp)) {
+            // Categorías con FilterChips
+            LazyRow(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp),
+                contentPadding = PaddingValues(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 items(categorias) { cat ->
-                    val isSelected = categoriaSeleccionada == cat
-                    Button(
+                    FilterChip(
+                        selected = categoriaSeleccionada == cat,
                         onClick = { categoriaSeleccionada = cat },
-                        modifier = Modifier.padding(horizontal = 4.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondaryContainer,
-                            contentColor = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondaryContainer
-                        )
-                    ) {
-                        Text(cat)
-                    }
+                        label = { Text(cat) }
+                    )
                 }
             }
 
-            // Lista scrollable de platos
-            LazyColumn {
+            // Lista de Platos
+            LazyColumn(
+                contentPadding = PaddingValues(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
                 items(platos) { plato ->
-                    ListItem(
-                        headlineContent = { Text(plato.nombre, style = MaterialTheme.typography.titleMedium) },
-                        supportingContent = {
-                            Text(
-                                "S/ ${plato.precio}\n${plato.descripcion}",
-                                maxLines = 2
-                            )
-                        },
-                        leadingContent = {
-                            Image(
-                                painter = painterResource(id = plato.imagenRes),
-                                contentDescription = plato.nombre,
-                                modifier = Modifier
-                                    .size(64.dp)
-                                    .clip(RoundedCornerShape(8.dp))
-                            )
-                        },
-                        modifier = Modifier.clickable {
-                            navController.navigate(Screen.Detail.createRoute(plato.id))
-                        }
-                    )
-                    HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp))
+                    PlatoCard(plato) {
+                        navController.navigate(Screen.Detail.createRoute(plato.id))
+                    }
                 }
+            }
+        }
+    }
+}
+
+@Composable
+fun PlatoCard(plato: Plato, onClick: () -> Unit) {
+    ElevatedCard(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(onClick = onClick),
+        shape = RoundedCornerShape(16.dp)
+    ) {
+        Row(
+            modifier = Modifier
+                .padding(12.dp)
+                .height(100.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            AsyncImage(
+                model = plato.imagenUrl,
+                contentDescription = plato.nombre,
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(RoundedCornerShape(12.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Column(
+                modifier = Modifier.fillMaxHeight(),
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column {
+                    Text(
+                        text = plato.nombre,
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = plato.descripcion,
+                        style = MaterialTheme.typography.bodySmall,
+                        maxLines = 2,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                }
+                Text(
+                    text = "S/ ${plato.precio}",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    fontWeight = FontWeight.ExtraBold
+                )
             }
         }
     }
