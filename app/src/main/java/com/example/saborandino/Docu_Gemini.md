@@ -48,40 +48,39 @@ texto a una aplicación comercial real donde el producto
 Chat para el apartado de Menu me gustaria agregar imagenes, 
 sugiereme de que forma deberia implementarlo y guiame paso a paso
 ### Sugerencia:
-"Un estado vacío no debe ser solo una pantalla en blanco. Agrega una validación visual que informe al usuario que su carrito está vacío y proporciónale una estructura clara de totales cuando tenga productos."
+"Un menú vacío no debe ser solo una imagen en blanco. Agrega una
+imagen visual que informe al usuario que plato esta escogiendo y 
+proporciónale una estructura clara"
 
 ### Antes:
-No había validación clara o el diseño era inconsistente cuando la lista estaba vacía.
-
+![img_6.png](img_6.png)
 ### Después:
-Validación con mensaje centralizado en `ProfileScreen` y una lista organizada con cálculo de total automático.
-
+![img_8.png](img_8.png)
 ### Implementación:
-Se agregó un condicional `if (pedido.isEmpty())` en `ProfileScreen.kt` y se usó `PedidoManager` para centralizar la lógica del total.
-
+Imagenes de los platos      
 ### Reflexión:
-Mejorar los estados vacíos da una sensación de robustez a la aplicación. El usuario ahora entiende perfectamente qué está pasando en su carrito.
+Mejorar lo que es el menú agreamos imagenes para asi hacer mejor la experencia
+de usuario las imagenes fueron agregadas mediante link.
 
 ---
 
-## Mejora 3: Ergonomía y Jerarquía en Detalle del Plato
+## Mejora 3: Organización en Detalle del Plato
 
 ### Prompt usado:
-(Igual al anterior, enfocado en componentes visuales y experiencia de usuario).
+Igual al anterior, enfocado en componentes visuales y experiencia de usuario pero ahora en los detalles de
+cada plato para asi el usuario pueda ver mejor la informacion.
 
 ### Sugerencia:
 "Resalta el precio usando contenedores tonales y agrupa los controles
 de cantidad con el botón de compra en la parte inferior para 
 mejorar la ergonomía al usar el teléfono con una mano."
 
-### Antes:
-Botones dispersos y precio sin énfasis visual.
-
-### Después:
-Imagen de cabecera 'Hero', precio resaltado en un `Surface` secundario y barra de acciones inferior agrupada.
+![img_9.png](img_9.png)
 
 ### Implementación:
 Uso de `Scaffold` con una barra de acciones inferior personalizada en `DetailScreen.kt` y estilos de tipografía `Headline` para el nombre del plato.
 
 ### Reflexión:
-Esta mejora cambió la forma en que el usuario interactúa con la pantalla de detalle, haciendo el proceso de 'Agregar' mucho más rápido e intuitivo.
+Esta mejora cambió la forma en que el usuario interactúa 
+con la pantalla de detalle, haciendo el proceso de 'Agregar' 
+mucho más rápido e intuitivo.
