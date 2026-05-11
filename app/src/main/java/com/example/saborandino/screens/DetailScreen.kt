@@ -22,9 +22,15 @@ import com.example.saborandino.model.DataProvider
 import com.example.saborandino.model.PedidoManager
 import com.example.saborandino.ui.theme.SaborAndinoTheme
 
+/**
+ * DetailScreen: Vista detallada de un plato individual.
+ * Palabra clave: Argument Passing - Recibe un 'id' desde la navegación para buscar datos específicos.
+ * Palabra clave: state - Usa 'mutableIntStateOf' para manejar la cantidad de productos de forma reactiva.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(navController: NavController, id: Int) {
+    // Buscamos el plato en la "base de datos" usando el ID recibido
     val plato = DataProvider.platos.find { it.id == id }
 
     if (plato == null) {
@@ -34,6 +40,7 @@ fun DetailScreen(navController: NavController, id: Int) {
         return
     }
 
+    // Estado local para controlar la cantidad a pedir
     var cantidad by remember { mutableIntStateOf(1) }
 
     Scaffold(
@@ -52,9 +59,9 @@ fun DetailScreen(navController: NavController, id: Int) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
-                .verticalScroll(rememberScrollState())
+                .verticalScroll(rememberScrollState()) // Permite scroll si el contenido es largo
         ) {
-            // Imagen de alto impacto usando Coil
+            // Imagen 'Hero' - Elemento visual protagonista
             AsyncImage(
                 model = plato.imagenUrl,
                 contentDescription = plato.nombre,
@@ -78,6 +85,7 @@ fun DetailScreen(navController: NavController, id: Int) {
                         fontWeight = FontWeight.Bold
                     )
                     
+                    // Precio resaltado en un contenedor tonal
                     Surface(
                         color = MaterialTheme.colorScheme.secondaryContainer,
                         shape = RoundedCornerShape(12.dp)
@@ -110,7 +118,7 @@ fun DetailScreen(navController: NavController, id: Int) {
 
                 Spacer(modifier = Modifier.height(40.dp))
 
-                // Selector y Botón con mejor UX (elevación tonal)
+                // Selector de cantidad y botón de agregar (Ergonomía inferior)
                 Surface(
                     tonalElevation = 3.dp,
                     shape = RoundedCornerShape(24.dp),
@@ -148,8 +156,9 @@ fun DetailScreen(navController: NavController, id: Int) {
 
                         Button(
                             onClick = {
+                                // Persistimos los datos en el Manager global
                                 PedidoManager.agregar(plato, cantidad)
-                                navController.popBackStack()
+                                navController.popBackStack() // Volvemos atrás
                             },
                             modifier = Modifier
                                 .height(56.dp)

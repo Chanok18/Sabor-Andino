@@ -23,17 +23,17 @@ por `ElevatedCard` con bordes redondeados (16dp) y usar `FilterChip` para las ca
 mejora la 'escaneabilidad' y la estética general."
 
 ### Antes:
-![img_4.png](img_4.png)
+![img_4.png](docs/img_4.png)
 ### Después:
-![img_2.png](img_2.png)
+![img_2.png](docs/img_2.png)
 ### Implementación:
 Se implementó `PlatoCard` usando `ElevatedCard` y `ContentScale.Crop` para las imágenes. Se reemplazaron los botones de categoría por `FilterChip`.
 
 ### Antes:
-![img_3.png](img_3.png)
+![img_3.png](docs/img_3.png)
 
 ### Despues:
-![img_5.png](img_5.png)
+![img_5.png](docs/img_5.png)
 
 ### Reflexión:
 La sugerencia fue fundamental. La app pasó de parecer un prototipo de
@@ -53,9 +53,9 @@ imagen visual que informe al usuario que plato esta escogiendo y
 proporciónale una estructura clara"
 
 ### Antes:
-![img_6.png](img_6.png)
+![img_6.png](docs/img_6.png)
 ### Después:
-![img_8.png](img_8.png)
+![img_8.png](docs/img_8.png)
 ### Implementación:
 Imagenes de los platos      
 ### Reflexión:
@@ -75,7 +75,7 @@ cada plato para asi el usuario pueda ver mejor la informacion.
 de cantidad con el botón de compra en la parte inferior para 
 mejorar la ergonomía al usar el teléfono con una mano."
 
-![img_9.png](img_9.png)
+![img_9.png](docs/img_9.png)
 
 ### Implementación:
 Uso de `Scaffold` con una barra de acciones inferior personalizada en `DetailScreen.kt` y estilos de tipografía `Headline` para el nombre del plato.

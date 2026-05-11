@@ -25,12 +25,19 @@ import com.example.saborandino.model.Plato
 import com.example.saborandino.navigation.Screen
 import com.example.saborandino.ui.theme.SaborAndinoTheme
 
+/**
+ * MenuScreen: Lista de productos filtrables.
+ * Palabra clave: LazyRow/LazyColumn - Listas eficientes que solo renderizan lo visible.
+ * Palabra clave: Filter - Lógica de filtrado dinámico basada en el estado de la categoría.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MenuScreen(navController: NavController) {
+    // Estado para la categoría seleccionada
     var categoriaSeleccionada by remember { mutableStateOf("Todos") }
     val categorias = listOf("Todos", "Entradas", "Fondo", "Bebidas", "Postres")
 
+    // Lógica de filtrado de la lista
     val platos = if (categoriaSeleccionada == "Todos") {
         DataProvider.platos
     } else {
@@ -50,7 +57,7 @@ fun MenuScreen(navController: NavController) {
         }
     ) { padding ->
         Column(modifier = Modifier.padding(padding)) {
-            // Categorías con FilterChips
+            // Fila de categorías (FilterChips)
             LazyRow(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -67,13 +74,14 @@ fun MenuScreen(navController: NavController) {
                 }
             }
 
-            // Lista de Platos
+            // Lista vertical de platos
             LazyColumn(
                 contentPadding = PaddingValues(16.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(platos) { plato ->
                     PlatoCard(plato) {
+                        // Navegación con argumento (ID)
                         navController.navigate(Screen.Detail.createRoute(plato.id))
                     }
                 }
@@ -82,6 +90,11 @@ fun MenuScreen(navController: NavController) {
     }
 }
 
+/**
+ * PlatoCard: Representación visual de un producto.
+ * Palabra clave: AsyncImage (Coil) - Carga de imágenes desde URL de forma asíncrona.
+ * Palabra clave: ElevatedCard - Componente de Material 3 para dar profundidad.
+ */
 @Composable
 fun PlatoCard(plato: Plato, onClick: () -> Unit) {
     ElevatedCard(

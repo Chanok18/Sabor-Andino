@@ -23,9 +23,15 @@ import com.example.saborandino.model.PedidoManager
 import com.example.saborandino.navigation.Screen
 import com.example.saborandino.ui.theme.SaborAndinoTheme
 
+/**
+ * ProfileScreen (Mi Pedido): Gestiona la visualización del carrito de compras.
+ * Palabra clave: Conditional UI - Muestra un estado vacío o la lista de productos según el PedidoManager.
+ * Palabra clave: Business Logic - Interactúa con el Singleton para calcular totales y mostrar datos.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(navController: NavController) {
+    // Obtenemos la lista reactiva de productos
     val pedido = PedidoManager.pedido
 
     Scaffold(
@@ -41,7 +47,7 @@ fun ProfileScreen(navController: NavController) {
         }
     ) { padding ->
         if (pedido.isEmpty()) {
-            // Estado vacío básico
+            // Estado vacío: Mejora de UX para cuando no hay datos
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -63,7 +69,7 @@ fun ProfileScreen(navController: NavController) {
                 }
             }
         } else {
-            // Lista de pedido simplificada
+            // Lista de productos seleccionados
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -91,6 +97,7 @@ fun ProfileScreen(navController: NavController) {
                                 Text(plato.nombre, fontWeight = FontWeight.Bold)
                                 Text("Cantidad: $cantidad", style = MaterialTheme.typography.bodySmall)
                             }
+                            // Cálculo dinámico del subtotal
                             Text("S/ ${plato.precio * cantidad}")
                         }
                         HorizontalDivider()
@@ -99,7 +106,7 @@ fun ProfileScreen(navController: NavController) {
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Total y Botón
+                // Resumen de la transacción
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
@@ -114,7 +121,7 @@ fun ProfileScreen(navController: NavController) {
                 }
 
                 Button(
-                    onClick = { /* Confirmar */ },
+                    onClick = { /* Lógica de finalización */ },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 16.dp)

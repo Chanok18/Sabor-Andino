@@ -21,8 +21,14 @@ import androidx.navigation.compose.rememberNavController
 import com.example.saborandino.navigation.Screen
 import com.example.saborandino.ui.theme.SaborAndinoTheme
 
+/**
+ * LoginScreen: Pantalla de acceso.
+ * Palabra clave: State Management - Uso de 'remember' y 'mutableStateOf' para capturar la entrada del usuario.
+ * Palabra clave: Conditional Navigation - Navega a Home solo si los campos no están vacíos.
+ */
 @Composable
 fun LoginScreen(navController: NavController) {
+    // Estado local para los campos de texto
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
@@ -41,7 +47,7 @@ fun LoginScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        // Logotipo / Icono de Marca
+        // Icono de Marca
         Box(
             modifier = Modifier
                 .size(100.dp)
@@ -76,7 +82,7 @@ fun LoginScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        // Campos con mejor redondeo y consistencia
+        // Entrada de Correo
         OutlinedTextField(
             value = email,
             onValueChange = { email = it },
@@ -88,6 +94,7 @@ fun LoginScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // Entrada de Contraseña con transformación visual
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
@@ -100,6 +107,7 @@ fun LoginScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
+        // Acción de Ingreso
         Button(
             onClick = {
                 if (email.isNotEmpty() && password.isNotEmpty()) {

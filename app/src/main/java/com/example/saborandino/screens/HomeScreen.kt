@@ -23,6 +23,11 @@ import androidx.navigation.compose.rememberNavController
 import com.example.saborandino.navigation.Screen
 import com.example.saborandino.ui.theme.SaborAndinoTheme
 
+/**
+ * HomeScreen: Panel principal o Dashboard.
+ * Palabra clave: Visual Hierarchy - Uso de espaciado y tamaños para guiar la vista.
+ * Palabra clave: DashboardCards - Componentes reutilizables para accesos rápidos.
+ */
 @Composable
 fun HomeScreen(navController: NavController) {
     Column(
@@ -40,7 +45,7 @@ fun HomeScreen(navController: NavController) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        //cabexera
+        // Cabecera de Bienvenida
         Text(
             text = "¡Bienvenido!",
             style = MaterialTheme.typography.displaySmall.copy(
@@ -58,7 +63,7 @@ fun HomeScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        //Tarjetas
+        // Tarjetas de navegación principal
         DashboardCard(
             title = "Ver Menú",
             subtitle = "Explora nuestra variedad de platos",
@@ -89,6 +94,10 @@ fun HomeScreen(navController: NavController) {
     }
 }
 
+/**
+ * DashboardCard: Componente personalizado para las tarjetas del menú principal.
+ * Palabra clave: Modularity - Código limpio y fácil de mantener.
+ */
 @Composable
 fun DashboardCard(
     title: String,
@@ -110,6 +119,7 @@ fun DashboardCard(
                 .fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Contenedor del icono con color tonal
             Surface(
                 color = MaterialTheme.colorScheme.primaryContainer,
                 shape = RoundedCornerShape(12.dp),

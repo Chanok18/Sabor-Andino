@@ -9,7 +9,6 @@ import com.example.saborandino.screens.HomeScreen
 import com.example.saborandino.screens.LoginScreen
 import com.example.saborandino.screens.MenuScreen
 import com.example.saborandino.screens.ProfileScreen
-
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
@@ -19,6 +18,7 @@ fun AppNavigation() {
         startDestination = Screen.Login.route
     ) {
 
+        // Definición de cada ruta (composable)
         composable(Screen.Login.route) {
             LoginScreen(navController)
         }
@@ -29,6 +29,7 @@ fun AppNavigation() {
             MenuScreen(navController)
         }
 
+        // Ruta con paso de argumentos (ID del plato)
         composable(Screen.Detail.route) { backStackEntry ->
             val id = backStackEntry.arguments?.getString("id")?.toInt() ?: 0
             DetailScreen(navController, id)

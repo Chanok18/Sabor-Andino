@@ -14,12 +14,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.saborandino.navigation.AppNavigation
 import com.example.saborandino.ui.theme.SaborAndinoTheme
 
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Habilita el diseño de borde a borde (edge-to-edge)
         enableEdgeToEdge()
         setContent {
+            // Aplicamos el tema personalizado de la aplicación
             SaborAndinoTheme {
+                // Invocamos el sistema de navegación principal
                 AppNavigation()
             }
         }
